@@ -12,17 +12,25 @@ import io.confluent.kafka.schemaregistry.client.rest.exceptions.RestClientExcept
 public class CreateSchema {
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws IOException, RestClientException {
-		// schema registry url.
-		String url = "http://172.29.0.212:8081";
 		// associated topic name.
 		String topic = "page-view-event";
 		// avro schema avsc file path.
-		String schemaPath = "C:\\Users\\suresh.babu\\eclipse-workspace\\kafka\\src\\page-view-event.avsc";
+		String schemaKeyPath = "C:\\Users\\suresh.babu\\eclipse-workspace\\kafka\\src\\page-view-event-key.avsc";
+		String schemaValuePath = "C:\\Users\\suresh.babu\\eclipse-workspace\\kafka\\src\\page-view-event.avsc";
 		// subject convention is "<topic-name>-value"
-		String subject = topic + "-value";
+		String subjectValue = topic + "-value";
+		String subjectKey = topic + "-key";
 		// avsc json string.
+		
+		createSchema(schemaKeyPath, subjectKey);
+		createSchema(schemaValuePath, subjectValue);
+	}
+	
+	private static void createSchema(String schemaPath, String subject) throws IOException, RestClientException {
 		String schema = null;
-
+		// schema registry url.
+		String url = "http://172.29.0.212:8081";
+				
 		FileInputStream inputStream = null;
 		try {
 			inputStream = new FileInputStream(schemaPath);
